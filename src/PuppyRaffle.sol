@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.7.6;
+// audit, using floating pragme is bad
+// @audit, why are you using low level solidity?
 
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
@@ -21,6 +23,8 @@ contract PuppyRaffle is ERC721, Ownable {
     uint256 public immutable entranceFee;
 
     address[] public players;
+
+    // @audit-info Raffle duration is never changed and should be immutable tag to save gas
     uint256 public raffleDuration;
     uint256 public raffleStartTime;
     address public previousWinner;
@@ -40,6 +44,7 @@ contract PuppyRaffle is ERC721, Ownable {
     string private constant COMMON = "common";
 
     // Stats for the rare puppy (st. bernard)
+    // @audit-gas should be constant
     string private rareImageUri = "ipfs://QmUPjADFGEKmfohdTaNcWhp7VGk26h5jXDA7v3VtTnTLcW";
     uint256 public constant RARE_RARITY = 25;
     string private constant RARE = "rare";
@@ -59,6 +64,8 @@ contract PuppyRaffle is ERC721, Ownable {
     /// @param _raffleDuration the duration in seconds of the raffle
     constructor(uint256 _entranceFee, address _feeAddress, uint256 _raffleDuration) ERC721("Puppy Raffle", "PR") {
         entranceFee = _entranceFee;
+        // @audit-info check for zero address
+        // input validation
         feeAddress = _feeAddress;
         raffleDuration = _raffleDuration;
         raffleStartTime = block.timestamp;
@@ -90,6 +97,9 @@ contract PuppyRaffle is ERC721, Ownable {
                 require(players[i] != players[j], "PuppyRaffle: Duplicate player");
             }
         }
+
+        // q still emits event even if player is 0
+
         emit RaffleEnter(newPlayers);
     }
 
@@ -104,6 +114,8 @@ contract PuppyRaffle is ERC721, Ownable {
         payable(msg.sender).sendValue(entranceFee);
 
         players[playerIndex] = address(0);
+
+        // @audit if am event is missing, low or wrong
         emit RaffleRefunded(playerAddress);
     }
 
@@ -136,6 +148,8 @@ contract PuppyRaffle is ERC721, Ownable {
         uint256 winnerIndex =
             uint256(keccak256(abi.encodePacked(msg.sender, block.timestamp, block.difficulty))) % players.length;
         address winner = players[winnerIndex];
+
+        // @audit-info magic numbers
         uint256 totalAmountCollected = players.length * entranceFee;
         uint256 prizePool = (totalAmountCollected * 80) / 100;
         uint256 fee = (totalAmountCollected * 20) / 100;
@@ -161,19 +175,24 @@ contract PuppyRaffle is ERC721, Ownable {
             tokenIdToRarity[tokenId] = LEGENDARY_RARITY;
         }
 
-        delete players;
+        delete players; // e resetting player
         raffleStartTime = block.timestamp;
-        previousWinner = winner;
+        previousWinner = winner; // e vanity, does not matter
+
         (bool success,) = winner.call{value: prizePool}("");
         require(success, "PuppyRaffle: Failed to send prize pool to winner");
         _safeMint(winner, tokenId);
     }
 
     /// @notice this function will withdraw the fees to the feeAddress
+   
     function withdrawFees() external {
+
+        // @audit mishandling ETH
         require(address(this).balance == uint256(totalFees), "PuppyRaffle: There are currently players active!");
         uint256 feesToWithdraw = totalFees;
         totalFees = 0;
+         // slither-disable-next-line arbitrary-send-eth
         (bool success,) = feeAddress.call{value: feesToWithdraw}("");
         require(success, "PuppyRaffle: Failed to withdraw fees");
     }
@@ -186,6 +205,9 @@ contract PuppyRaffle is ERC721, Ownable {
     }
 
     /// @notice this function will return true if the msg.sender is an active player
+    // @audit this ins't used anywhere
+    // IMPACT: none
+    // LIKELIHOOD: non, but waste of gas
     function _isActivePlayer() internal view returns (bool) {
         for (uint256 i = 0; i < players.length; i++) {
             if (players[i] == msg.sender) {

