@@ -22,7 +22,7 @@ Assisting Auditors:
 
 - [Puppy Raffle Audit Report](#puppy-raffle-audit-report)
 - [Table of contents](#table-of-contents)
-- [About YOUR\_NAME\_HERE](#about-your_name_here)
+- [About marvycodes](#about-marvycodes)
 - [Disclaimer](#disclaimer)
 - [Risk Classification](#risk-classification)
 - [Audit Details](#audit-details)
@@ -55,7 +55,7 @@ Assisting Auditors:
 </details>
 </br>
 
-# About YOUR_NAME_HERE
+# About marvycodes
 
 <!-- Tell people about you! -->
 
